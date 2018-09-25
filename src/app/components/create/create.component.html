@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h1>New Employee</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2.5rem">
+                <div fxFlex="30%">
+                    <div fxLayout="column">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Name" formControlName="name">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker" formControlName="dob" placeholder="Dob">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker startView="year"></mat-datepicker>
+                            <mat-error *ngIf="employeeForm.get('dob').errors && employeeForm.get('dob').errors.minAge">
+                                To be hired, you should have more than 18 years
+                            </mat-error>
+                        </mat-form-field>
+    
+                        <mat-form-field>
+                            <mat-select placeholder="Country" formControlName="country">
+                                <mat-option *ngFor="let country of storedCountries | async" [value]="country">
+                                    {{country.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
+                        <mat-form-field>
+                            <input matInput placeholder="Username" formControlName="username">
+                            <mat-error *ngIf="employeeForm.get('username').errors && employeeForm.get('username').errors.specialCharacter">
+                                Username cannot contain special characters
+                            </mat-error>
+                        </mat-form-field>
+    
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="pickerHiredate" formControlName="hireDate" placeholder="Hire Date">
+                            <mat-datepicker-toggle matSuffix [for]="pickerHiredate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerHiredate startView="year"></mat-datepicker>
+                        </mat-form-field>
+    
+                        <mat-slide-toggle formControlName="status"> Status</mat-slide-toggle>
+                    </div>
+                </div>
+                <div fxFlex="30%">
+                    <div fxLayout="column">
+                        <div class="area-info">
+                            <label>Area service</label>
+                            <mat-button-toggle-group formControlName="area">
+                                <mat-button-toggle value="serviceArea">
+                                    Services
+                                </mat-button-toggle>
+                                <mat-button-toggle value="kitchenArea">
+                                    Kitchen
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                        <employee-job-title [employeeForm]="employeeForm"></employee-job-title>
+                        <mat-form-field *ngIf="tipRateAvailable">
+                            <input matInput placeholder="Tip Rate" formControlName="tipRate">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <a mat-button routerLink="." class="go-back"> <i class="material-icons">arrow_back </i> Back </a>
+            <button mat-raised-button color="primary" [disabled]="!employeeForm.valid">Save</button>
+        </form>
+    </mat-card-content>
+    {{employeeForm.value | json}}
+</mat-card>

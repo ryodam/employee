@@ -1,0 +1,7 @@
+<mat-form-field [formGroup]="employeeForm">
+    <mat-select placeholder="Job Title" formControlName="jobTitle">
+        <mat-option *ngFor="let areaJob of selectedAreaJobs.value"  [value]="areaJob">
+            {{areaJob.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
