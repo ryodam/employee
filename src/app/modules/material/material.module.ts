@@ -3,34 +3,57 @@ import { CommonModule } from '@angular/common';
 
 import {
   MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
   MatDatepickerModule,
+  MatIconModule,
   MatInputModule,
+  MatNativeDateModule,
+  MatRadioModule,
   MatSelectModule,
+  MatSidenavModule,
+  MatSnackBarModule,
   MatSlideToggleModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  MatToolbarModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
     MatDatepickerModule,
+    MatIconModule,
     MatInputModule,
+    MatNativeDateModule,
+    MatRadioModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatSnackBarModule,
     MatSlideToggleModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatToolbarModule
   ],
   declarations: [],
   exports: [
     MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
     MatDatepickerModule,
+    MatIconModule,
     MatInputModule,
+    MatNativeDateModule,MatRadioModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatSnackBarModule,
     MatSlideToggleModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule { }
