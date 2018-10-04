@@ -5,7 +5,7 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
+        <form [formGroup]="employeeForm" >
             <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2.5rem">
                 <div fxFlex="30%">
                     <div fxLayout="column">
@@ -60,15 +60,14 @@
                         </div>
                         <employee-job-title [employeeForm]="employeeForm"></employee-job-title>
                         <mat-form-field *ngIf="tipRateAvailable">
-                            <input matInput placeholder="Tip Rate" formControlName="tipRate">
+                            <input matInput placeholder="Tip Rate" formControlName="tipRate" [value]="employeeForm.get('tipRate').value | number:'.01'">
                         </mat-form-field>
                     </div>
                 </div>
             </div>
             <br>
-            <a mat-button routerLink="." class="go-back"> <i class="material-icons">arrow_back </i> Back </a>
-            <button mat-raised-button color="primary" [disabled]="!employeeForm.valid">Save</button>
+            <button mat-button class="go-back" (click)="goBack()"> <i class="material-icons">arrow_back </i> Back </button>
+            <button mat-raised-button color="primary" [disabled]="!employeeForm.valid" (click)="createEmployee()">Save</button>
         </form>
     </mat-card-content>
-    {{employeeForm.value | json}}
 </mat-card>

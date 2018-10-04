@@ -1,16 +1,10 @@
 <div class="container">
     <mat-toolbar color="primary" class="app-toolbar" >
-        <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
         <h1 class="example-app-name">Employee Management</h1>
     </mat-toolbar>
     <mat-sidenav-container class="navbar-container">
-        <mat-sidenav class="side-nav" #snav>
-
-        </mat-sidenav>
         <mat-sidenav-content class="side-nav-content">
-            <employee-create></employee-create>
+            <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

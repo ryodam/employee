@@ -5,9 +5,11 @@ import {
     FormBuilder
 } from "@angular/forms";
 import { MatSnackBar } from '@angular/material';
-import { DatePipe } from '@angular/common'
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Country } from '../../models/country.interface';
 
@@ -17,6 +19,8 @@ import { AppState } from '../../app.state';
 import { AgeValidator } from '../../commons/validators/age.validator';
 import { CharactersValidator } from '../../commons/validators/characters.validator';
 
+import { DateHelpers } from '../../commons/helpers/date.helper';
+
 @Component({
     selector: "employee-create",
     templateUrl: "./create.component.html",
@@ -24,31 +28,51 @@ import { CharactersValidator } from '../../commons/validators/characters.validat
 })
 export class CreateComponent implements OnInit {
     employeeForm: FormGroup;
-    countries: {}[];
     rateAvailableFor: string[] = [
         'dishwasher',
         'roommanager'
     ];
     tipRateAvailable: boolean = false;
-    storedCountries: Observable<Country[]>;
+    storedCountries: Observable<Country>;
 
-    constructor(private fb: FormBuilder, private store: Store<AppState>, private snackBar: MatSnackBar) {
-        this.storedCountries = store.select('country');
+    constructor(
+        private fb: FormBuilder,
+        private store: Store<AppState>,
+        private snackBar: MatSnackBar,
+        private router: Router,
+        private location: Location) {
+        this.storedCountries = store.select('country').pipe(
+            map( countries => countries[0])
+        );
     }
 
     ngOnInit() {
         this.initForm();
-        this.employeeForm.get('jobTitle').valueChanges.subscribe( value => {
+        this.employeeForm.get('jobTitle').valueChanges.subscribe( jobTitle => {
             this.employeeForm.get('tipRate').setValue(0);
-            this.tipRateAvailable = this.rateAvailableFor.some( person => person === value);
+            this.tipRateAvailable = this.rateAvailableFor.some( person => person === jobTitle.value);
+        });
+        this.employeeForm.get('dob').valueChanges.subscribe( value => {
+            this.employeeForm.get('age').setValue(DateHelpers.getAge(value));
         });
     }
 
     createEmployee() {
         this.store.dispatch(new EmployeeActions.AddEmployee(this.employeeForm.value));
         this.snackBar.open('Employee', 'Saved', {
-            duration: 2000
+            duration: 1000
+        })
+        .afterDismissed().subscribe( () => {
+            this.router.navigate(['list']);
         });
+    }
+
+    goBack() {
+        this.location.back();
+    }
+
+    canDeactivate(): boolean {
+        return this.employeeForm.dirty;
     }
 
     private initForm() {
@@ -61,7 +85,8 @@ export class CreateComponent implements OnInit {
             status: [false, Validators.required],
             area: ['serviceArea'],
             jobTitle: ['', Validators.required],
-            tipRate: [0]
+            tipRate: [0],
+            age: 0
         });
     }
 }
