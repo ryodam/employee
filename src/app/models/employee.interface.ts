@@ -3,10 +3,10 @@ import { Jobtitle } from './jobtitle.interface';
 
 export interface Employee {
     name: string;
-    dob: number;
+    dob: string;
     country: Country;
     userName: string;
-    hireDate: number;
+    hireDate: string;
     status: boolean;
     area: string;
     jobTitle: Jobtitle;

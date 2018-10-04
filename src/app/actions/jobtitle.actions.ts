@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-export const ADD_JOBTITLE = 'ADD JOBTITLE';
+export const ADD_JOBTITLE = '[Jobtitle] ADD JOBTITLE';
 
 
 import { Jobtitle } from '../models/jobtitle.interface';
