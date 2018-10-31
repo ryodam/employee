@@ -23,6 +23,11 @@ const routes: Routes = [
         canDeactivate: [CanDeactivateGuard]
     },
     {
+        path: 'employee/:id',
+        component: CreateComponent,
+        canDeactivate: [CanDeactivateGuard]
+    },
+    {
         path: '**',
         redirectTo: '/list',
         pathMatch: 'full'
